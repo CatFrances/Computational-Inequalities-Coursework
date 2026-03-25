@@ -1,0 +1,593 @@
+
+/*if anyone is reading this sorry its kind of messy :< i experimented with lots of different styling */
+
+/* variables */
+:root {
+  --bg:    #150DF7;
+
+  --text-primary:  #e8dfd0; /*for titles*/
+  --text-secondary:#ffffff;
+  --text-muted:    #ff08bd;
+
+  --accent:        #ff08bd; 
+  --accent-dim:    #ffffff;
+  --accent-glow:   rgba(255, 255, 255, 0.15);
+
+  --border:        rgba(255, 255, 255, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+
+  --font-display: 'Bitcount Prop Double', Georgia, serif;
+  --font-body:    'IBM Plex Mono', Georgia, serif;
+  --font-mono:    'IBM Plex Mono', 'Courier New', monospace;
+
+  --section-min-h: 100vh;
+  --container-max: 1200px;
+  --transition:    0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; }
+
+/*general stuff*/
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*highlight*/
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+
+/* scroll progress bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 1000;
+  transition: width 0.1s linear;
+}
+
+/*accordion*/
+.acc-header{
+  cursor:pointer;
+  outline: 0.5px solid var(--accent);
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  margin-bottom:0.25rem;
+}
+
+.acc-header:hover{
+  color: var(--accent);
+  background: rgba(201, 168, 76, 0.07);
+}
+.acc-body { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; }
+.acc-item.open .acc-body { max-height: 300px; }
+
+@media (max-width: 768px) {
+  .side-nav { display: none; }
+}
+
+
+/* storyboard sections*/
+.story-section {
+  position: relative;
+  min-height: var(--section-min-h);
+  padding: 7rem 0 5rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.story-section .container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+/*diff colours for background ?*/
+.section-dark {
+  background-color: var(--bg);
+}
+
+
+/* small layer label */
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+  display: block;
+}
+
+/* main section title */
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+/* subtitles */
+.subtitle {
+
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+
+}
+
+.section-body {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+}
+
+/*dont leave a big gap*/
+.section-body:last-child { margin-bottom: 0; }
+
+/*some small util-y stuff*/
+.padded {
+  padding: 20px;
+}
+.bordered{
+  border: 1px solid var(--accent);
+}
+
+.body-pink {
+  color: var(--accent);
+}
+
+.top-margin {
+  margin-top: 3rem
+}
+
+.small-header{
+    border: 1px solid var(--accent)
+}
+
+.accent{
+    color: var(--accent);
+    font-weight: bold;
+}
+
+/* main title hero page */
+.section-hero {
+  background-color: var(--bg);
+  min-height: 100vh;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+/*highlight bit of title?*/
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+/*for name, etc under title*/
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/*try chips like data collection section?*/
+.meta-chip {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.9rem;
+  border-radius: 2px;
+}
+
+
+/* callout box for important stuff*/
+.callout-box {
+  border-left: 3px solid var(--accent);
+  padding: 0.75rem 1.5rem;
+  margin: 2rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--text-primary);
+  line-height: 1.6;
+  background: var(--accent-glow);
+}
+
+
+/*image caption, use for diagrams etc*/
+.image-caption {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.6rem;
+  letter-spacing: 0.05em;
+}
+
+
+/* stat chip row */
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0 2.5rem;
+}
+
+.stat-chip {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1rem 1.5rem;
+  margin: 0 1.5rem;
+  min-width: 130px;
+  flex: 1;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+
+/* dataset snippet*/
+
+.dataset-snippet {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  margin-top: 2rem;
+  overflow: hidden;
+}
+
+.dataset-snippet--inline {
+  margin-top: 1.5rem;
+}
+
+.snippet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(201,168,76,0.07);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.snippet-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.snippet-rows {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* tabs for switching between datasets AND charts, cba to change name now */
+.dataset-tabs {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.dataset-tab {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.dataset-tab:hover {
+  color: var(--text-primary);
+}
+
+.dataset-tab.active {
+  color: var(--accent);
+  border-color: var(--border);
+  background: rgba(201, 168, 76, 0.07);
+}
+
+/* panels to switch between */
+.dataset-panel {
+  display: none;
+}
+
+.dataset-panel.active {
+  display: block;
+}
+
+/* general table styling */
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/*header style*/
+.data-table th {
+  background: rgba(255,255,255,0.03);
+  color: var(--accent);
+  padding: 0.55rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/*other things style*/
+.data-table td {
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+/*change colour when cursor hovers over*/
+.data-table tbody tr:hover {
+  background: rgba(201,168,76,0.04);
+}
+
+
+/* d3 chart wrapper */
+.chart-wrapper {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+
+.chart-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chart-title {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+}
+
+.chart-source {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--text-muted);
+}
+
+.d3-chart {
+  display: block;
+  width: 100%;
+  height: 340px;
+}
+
+/*charts where dataset snippets were*/
+.ds-chart {
+  height: 260px;
+  display: block;
+  width: 100%;
+}
+
+/* d3 axis/chart styling change w/ javascript ?*/
+.chart-wrapper .tick text {
+  fill: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+}
+
+.chart-wrapper .domain,
+.chart-wrapper .tick line {
+  stroke: var(--border);
+}
+
+
+
+/* ── Summary Grid (Conclusion) ──────────────────────────────── */
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.summary-card {
+  background: var(--bg);
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.summary-val {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.summary-lbl {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+
+/* ── CTA Buttons ────────────────────────────────────────────── */
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+.btn-story {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.7rem 1.5rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: 1px solid var(--accent);
+  transition: background var(--transition), color var(--transition);
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-story:hover {
+  background: transparent;
+  color: var(--accent);
+}
+
+.btn-story--ghost {
+  background: transparent;
+  color: var(--accent);
+}
+
+.btn-story--ghost:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+
+/* ── Conclusion Section ─────────────────────────────────────── */
+.section-conclusion {
+  background: var(--bg);
+}
+
+.section-conclusion::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* stagger reveal of children */
+.reveal-item:nth-child(1) { transition-delay: 0.05s; }
+.reveal-item:nth-child(2) { transition-delay: 0.15s; }
+.reveal-item:nth-child(3) { transition-delay: 0.25s; }
+.reveal-item:nth-child(4) { transition-delay: 0.35s; }
+.reveal-item:nth-child(5) { transition-delay: 0.45s; }
+.reveal-item:nth-child(6) { transition-delay: 0.55s; }
+
+
+/* tooltip for d3 charts */
+.d3-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-primary);
+  z-index: 100;
+  transition: opacity 0.15s ease;
+}
+
+
+/* ── Responsive tweaks ──────────────────────────────────────── */
+@media (max-width: 992px) {
+  .story-section { padding: 5rem 0 4rem; }
+  .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); }
+}
+
+@media (max-width: 576px) {
+  .stat-row { gap: 0.5rem; }
+  .stat-chip { min-width: 100%; }
+  .summary-grid { grid-template-columns: 1fr 1fr; }
+  .summary-val { font-size: 1.7rem; }
+}
+
+/*hyperlinks*/
+a {
+  color: var(--accent);
+}
+
+a:hover {
+  color: #b40084;
+}
