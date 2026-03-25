@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Computational Inequalities Storyboard</title>
+
+  <!--bootstrap-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!--fonts-->
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Double:wght@100;500&Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <!--d3.js-->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+  <!--stylesheet-->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!--scroll progress bar-->
+  <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+
+
+  <!--TITLE PAGE-->
+  <section id="section-1" class="story-section section-hero reveal-section">
+    <div class="container h-100">
+      <div class="row h-100 align-items-center">
+        <div class="col-12 col-lg-9">
+          <h1 class="hero-title reveal-item">
+            AI Toxicity Models and<br />
+            <em>Misogyny</em><br />
+            In the Online Gaming Space
+          </h1>
+
+          <!--subtitle bits-->
+          <div class="hero-meta reveal-item">
+            <span class="meta-chip">Cat Menzies</span>
+            <span class="meta-chip">Computational Inequalities</span>
+            <span class="meta-chip">2026</span>
+          </div>
+        </div>
+      </div>
+
+      <!--disclaimer-->
+      <p class="section-body top-margin">Please be aware that this page contains explicit and potentially harmful language.</p>
+    </div>
+  </section>
+
+
+  <!--part 1, system and context-->
+  <section id="section-2" class="story-section reveal-section">
+    <div class="container">
+
+      <p class="section-label reveal-item">Layer 1</p>
+      <div class="row g-5 align-items-center">
+
+        <h2 class="section-title reveal-item">System & Context</h2>
+
+        <p class="section-body reveal-item">
+          As the online gaming space becomes too vast for manual chat moderation, more and more advanced machine learning models
+          are being developed for the purpose of automating the process of identifying and penalising toxic game chat.
+          As such, online gamers rely on AI chat moderation to protect their right to exist and communicate online without being abused or discriminated against.
+          I am investigating what happens when models and their developers fail to protect this right.
+        </p>
+
+        <blockquote class="callout-box reveal-item">
+          This case study will focus on the disproportionate harm done to women by the failure of toxicity detection models to accurately and reliably detect sexually violent and misogynistic rhetoric in game chat.
+        </blockquote>
+
+        <!--text column -->
+        <div class="col-12 col-lg-6">
+          <p class="section-body reveal-item">
+            The modern video gaming space is underpinned by a pervasive culture of misogyny, particularly expressed through sexual harassment, sexually violent language and behaviour.
+            This can be seen in the fact that <span class="accent">56.6%</span> of women report having experienced one or more types of sexual harassment in online games. Due to this, a failure to accurately and reliably identify toxicity in game chat disproportionally harms women;
+            Not only can seeing this content cause distress for the victim, but a lack of penalisation for the perpetrator reinforces the idea that this kind of harassment is acceptable.
+            With over <span class="accent">83%</span> of 12-15 year-olds stating that they play games online involving other people, this facilitates a particularly dangerous situation in which young boys are groomed into this culture of misogyny, creating a feedback loop of toxicity.
+          </p>
+        </div>
+
+        <!-- diagram image column -->
+        <div class="col-12 col-lg-6 reveal-item">
+          <div>
+            <img
+              src="pipeline1.png"
+              alt="Diagram showing the flow of data and inequality through the machine learning pipeline."
+              class="img-fluid"
+            />
+            <p class="image-caption">This diagram demonstrates the flow of inequality through the machine learning pipeline and beyond, and the feedback loop that this creates.</p>
+          </div>
+
+          
+        </div>
+        <blockquote class="callout-box reveal-item">
+            My aim with this project is to expose the role that cultural bias against women plays in each layer of the pipeline.
+          </blockquote>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!--part2, data creation and representation-->
+  <section id="section-3" class="story-section reveal-section">
+    <div class="container">
+
+      <p class="section-label reveal-item">Layer 2</p>
+      <h2 class="section-title reveal-item">Data creation & representation</h2>
+      <p class="section-body col-lg-7 reveal-item">
+        Throughout this investigation, I will focus on 2 benchmark datasets used for training and testing.
+      </p>
+
+      <!--TABLE based tab switcher-->
+      <div class="dataset-snippet reveal-item">
+        <div class="snippet-header">
+          <div class="dataset-tabs">
+            <button class="dataset-tab active" data-tab="tbl1">Jigsaw Toxic Comment Classification Challenge Dataset</button>
+            <button class="dataset-tab" data-tab="tbl2">Google Civil Comments Dataset</button>
+          </div>
+        </div>
+
+        <!--table 1 (jigsaw)-->
+        <div class="dataset-panel active" id="tbl1">
+               
+      <div class="stat-row reveal-item">
+        <div class="stat-chip">
+          <span class="stat-value">159,571</span>
+          <span class="stat-label">Total Records</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-value">Wikipedia</span>
+          <span class="stat-label">Data Origin</span>
+        </div>
+      </div>
+       <p class="section-body padded reveal-item">
+        Created by Alphabet Jigsaw for their <a href="https://www.kaggle.com/c/jigsaw-toxic-comment-classification-challenge">Toxic Comment Classification Challenge,</a> this dataset is compiled of Wikipedia editor comments. Human annotators mark each toxicity label with a binary score.
+      </p>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th>id</th><th>comment_text</th><th>toxic</th><th>severe_toxic</th><th>obscene</th><th>threat</th><th>insult</th><th>identity_hate</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0000997932d777bf</td><td>Explanation Why the edits made under my username Hardcore Metallica Fan were reverted? They weren't vandalisms, just closure on some GAs after I voted at New York Dolls FAC. And please don't remove the template from the talk page since I'm retired now.</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>000103f0d9cfb60f</td><td>D'aww! He matches this background colour I'm seemingly stuck with. Thanks.</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>000113f07ec002fd</td><td>Hey man, I'm really not trying to edit war. It's just that this guy is constantly removing relevant information and talking to me through edits instead of my talk page. He seems to care more about the formatting than the actual info.</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0001b41b1c6bb37e</td><td>More I can't make any real suggestions on improvement - I wondered if the section statistics should be later on, or a subsection of ""types of accidents"" -I think the references may need tidying so that they are all in the exact same format ie date format etc. I can do that later on, if no-one else does first - if you have any preferences for formatting style on references or want to do it yourself please let me know. There appears to be a backlog on articles for review so I guess there may be a delay until a reviewer turns up. It's listed in the relevant form eg Wikipedia:Good_article_nominations#Transport</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0001d958c54c6e35</td><td>You, sir, are my hero. Any chance you remember what page that's on?</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>00025465d4725e87</td><td>"Congratulations from me as well, use the tools well."</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>0002bcb3da6cb337</td><td>COCKSUCKER BEFORE YOU PISS AROUND ON MY WORK</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                <tr><td>00031b1e95af7921</td><td>Your vandalism to the Matt Shirvington article has been reverted. Please don't do it again, or you will be banned.</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>00037261f536c51d</td><td>Sorry if the word 'nonsense' was offensive to you. Anyway, I'm not intending to write anything in the article(wow they would jump on me for vandalism), I'm merely requesting that it be more encyclopedic so one can use it for school as a reference. I have been to the selective breeding page but it's almost a stub. It points to 'animal breeding' which is a short messy article that gives you no info. There must be someone around with expertise in eugenics?</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                <tr><td>00040093b2687caa</td><td>alignment on this subject and which are contrary to those of DuLithgow</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- table 2 (civil comments) -->
+        <div class="dataset-panel" id="tbl2">
+                              
+      <div class="stat-row reveal-item">
+        <div class="stat-chip">
+          <span class="stat-value">902,437</span>
+          <span class="stat-label">Total Records</span>
+        </div>
+
+        <div class="stat-chip">
+          <span class="stat-value">Civil Comments</span>
+          <span class="stat-label">Data Origin</span>
+        </div>
+      </div>
+
+      <p class="section-body padded reveal-item">
+        Sourced from the discontinued <a href="https://medium.com/@aja_15265/saying-goodbye-to-civil-comments-41859d3a2b1d">Civil Comments</a> plugin, which required comments on news sites, for example, to be manually approved or disapproved by other commenters before posting. The data represents the proportion of approvers who marked each toxicity label as applying to each comment.
+</p>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th>text</th><th>toxicity</th><th>severe_toxicity</th><th>obscene</th><th>threat</th><th>insult</th><th>identity_hate</th><th>sexual_explicit</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>This is so cool. It's like, 'would you want your mother to read this??' Really great idea, well done!</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                <tr><td>Thank you!! This would make my life a lot less anxiety-inducing. Keep it up, and don't let anyone get in your way!</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                <tr><td>This is such an urgent design problem; kudos to you for taking it on. Very impressive!</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                <tr><td>Is this something I'll be able to install on my site? When will you be releasing it?</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                <tr><td>haha you guys are a bunch of losers.</td><td>0.893617	</td><td>0.021277</td><td>0.0</td><td>0.0</td><td>0.872340</td><td>0.021277</td><td>0.0</td></tr>
+                <tr><td>ur a sh*tty comment.</td><td>0.666667</td><td>0.047619</td><td>0.638095</td><td>0.0</td><td>0.333333</td><td>0.0</td><td>0.009524</td></tr>
+                <tr><td>hahahahahahahahhha suck it.</td><td>0.457627</td><td>0.050847</td><td>0.305085</td><td>0.0</td><td>0.254237</td><td>0.0</td><td>0.220339</td></tr>
+                <tr><td>FFFFUUUUUUUUUUUUUUU</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                <tr><td>The ranchers seem motivated by mostly by greed; no one should have the right to allow their animals destroy public land.</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+                <tr><td>It was a great show. Not a combo I'd of expected to be good together but it was.</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td><td>0.0</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="subtitle reveal-item">Data Source</h2>
+           <p class="section-body reveal-item">
+        Considering the (often harmful) influence of gaming subcultures on the wider internet culture and subsequently on the political and cultural landscape of internet-connected communities in general (Bezio 2018), the fact that there is no widely accessible benchmark dataset comprised of video game chat logs is concerning. 
+        Additionally, gaming culture is partially characterised by linguistic deviation and a niche lexicon by which the 'in group' of gamers can identify one another (Susanti 2022). 
+        For example, the above paper mentions the word 'noob', an insult stemming from the world 'newbie', referring to a player who performs poorly in a game. A commonly used insult in online video games, the word appeared only 9 times in the Jigsaw dataset and 25 times in the Civil Comments dataset. 
+        Particularly considering that 'noob' is arguably an example of 'gamer-speak' that has found its way into the mainstream online lexicon, it could be entirely possible that more obscure, newer gamer-specific language will not be represented in these datasets at all. This only reinforces the necessity for a model trained on linguistic data sourced from online game chat, as a lack of relevant specific training data allows potentially toxic language such as this to slip under the radar.
+          </p>
+
+          <h2 class="subtitle reveal-item">Collected Information</h2>
+           <p class="section-body reveal-item">
+            In addition to the lack of gaming-specific comment data collected, the data lacks the contextual information necessary to accurately capture the impact and lived experience of internet users using and encountering toxic language online, eg.
+            </p>
+            <ul class="section-body reveal-item">
+              <li>Gendered characteristics of the victim, if there is one (speaking with a typically ‘female’ voice, online name includes a feminine name, etc).</li>
+              <li>Conversational context of the comment.</li>
+            </ul>
+            <p class="section-body reveal-item">
+            A lack of context such as this results in an inability to accurately judge nuanced situations, such as the use of misogynistic or generally harmful dogwhistles in game chat. For example, we can compare 2 conversations:
+
+          </p>
+          <div class="row justify-content-around top-margin reveal-item">
+             <div class="col-4 bordered">
+  
+          <p>
+           p1 (male): sorry haha my lag is so bad 
+          </p>
+          <p>
+           p1 (male): i moved my laptop from the kitchen to my room and the wifi sucks here
+          </p>
+           <p class="body-pink">
+           p2 (male): go back to the kitchen lol
+          </p>
+        </div>
+             <div class="col-4 bordered">
+           <p>
+           p1 (male): are u a girl
+          </p>
+          <p>
+           p2 (female): yeah why
+          </p>
+           <p class="body-pink">
+           p1 (male): go back to the kitchen lol
+          </p>
+           <p>
+           p1 (male): u suck
+          </p>
+          </div>
+        </div>
+
+        <p class="section-body top-margin reveal-item">
+          The same comment 'go back to the kitchen lol', is used in both contexts, however only in the second conversation does it act as a misogynistic dogwhistle, an example of what Emma Alice Jane refers to as 'e-bile' against women online (Jane 2014). 
+          Much as dogwhistles such as these are created and used with the intention of creating plausible deniability amongst human readers, without the necessary context online comments such as these could easily be ignored by annotators, leading to the same outcome when processed by a toxicity detection model.
+          While 'u suck lol' could be flagged as an insult by an annotator, without the two messages together in the relevant context, the misogynistic tone of the conversation is never picked up on.
+        </p>
+        <h2 class="subtitle reveal-item">A Potential Alternative</h2>
+         <p class="section-body reveal-item">
+          Below is an example (using synthetic data generated by myself) of the metadata that could be collected to provide further context to a dataset comprised of game chat log information. 
+          Giving each message in a game a number corresponding to the order in which they were sent also allows for annotators to view the conversational context of each comment, allowing for more accurate annotation in cases such as the above.
+        </p>
+
+                <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th>playerID</th><th>date</th><th>time</th><th>server</th><th>matchID</th><th>chatID</th><th>chat_text</th>
+              </thead>
+              <tbody>
+                <tr><td>000001</td><td>16/03/2026</td><td>10:30:23</td><td>LON</td><td>UR0001</td><td>0001</td><td>hi everyone :></td>
+                  <tr><td>000002</td><td>16/03/2026</td><td>10:30:45</td><td>LON</td><td>UR0001</td><td>0002</td><td>hey hows it going</td>
+                    <tr><td>000001</td><td>16/03/2026</td><td>10:31:04</td><td>LON</td><td>UR0001</td><td>0003</td><td>im good! good luck have fun</td>
+              </tbody>
+            </table>
+          </div>
+
+    </div>
+  </section>
+
+
+  <!--part 3, classification and taxonomy-->
+  <section id="section-4" class="story-section reveal-section">
+    <div class="container">
+
+      <p class="section-label reveal-item">Layer 3</p>
+      <h2 class="section-title reveal-item">Classification & taxonomy</h2>
+      <p class="section-body reveal-item">
+        The process of automated toxicity detection hinges massively on the categories used to define toxicity and its different forms - 
+        I argue that the taxonomy used for benchmark datasets and models is a significant factor in these models' failure to protect women and other marginalised groups from online toxicity.
+      </p>
+      <div class="row">
+      <div class="section-body col-12 col-lg-6 reveal-item">
+      <p class="top-margin">
+        Firstly, treating 'identity hate' (including misogyny) as distinct to 'sexual explicit' or 'insult', for example, fails to recognise the role that structural misogyny has played in the development of language, including insulting language. 
+        For example, in the Toxic Comment Challenge dataset sample, a comment including the word 'cocksucker' was flagged as obscene and insulting, but not as identity hate.
+        Despite misogynistic and homophobic origins conflating sexual behaviour with weakness of character, many annotators may be desensitised to this kind of structural discrimination. 
+        This is the case for a significant proportion of vulgar and insulting language, and as such to treat these categories as unquestionably distinct could result in a failure of the data to accurately represent less obvious identity discrimination such as this.
+      </p>
+      </div>
+             <div class="col-12 col-lg-6 reveal-item">
+          <div>
+            <img
+              src="diagram.png"
+              alt="taxonomy diagram showing the different levels of classification of toxicity data for the Google Civil Comments dataset."
+              class="img-fluid"
+            />
+            <p class="image-caption">Taxonomy diagram for the toxicity data top-level category of the Civil Comments dataset.</p>
+          </div>
+      </div>
+      </div>
+
+      <p class="section-body reveal-item">
+        For the remainder of this section I want to explore the harm that can be caused by collapsing all 'identity hate' into a homogenous category.
+      </p>
+
+      <!--CHART based tab switcher-->
+      <div class="dataset-snippet reveal-item">
+        <div class="snippet-header">
+          <div class="dataset-tabs">
+            <button class="dataset-tab active" data-tab="ds1" data-label="Number of comments flagged as containing each label.">Jigsaw TCCC Dataset</button>
+            <button class="dataset-tab" data-tab="ds2" data-label="Number of comments flagged by over 50% of moderators as containing each label.">Google CC Dataset</button>
+          </div>
+          <span class="snippet-rows" id="ds-tab-label">Number of comments flagged as containing each label.</span>
+        </div>
+
+        <div class="dataset-panel active" id="ds1">
+          <svg class="d3-chart ds-chart" id="ds-chart1"></svg>
+        </div>
+
+        <div class="dataset-panel" id="ds2">
+          <svg class="d3-chart ds-chart" id="ds-chart2"></svg>
+        </div>
+      </div>
+
+      <div class="row top-margin justify-content-around section-body bordered padded">
+        <div class="col-lg-6">
+          These charts demonstrate the discrepancy between representation of different kinds of toxicity in each dataset. By dividing the data into uneven categories such as these, an inherent bias is being introduced to the pipeline in which the model becomes better trained to recognise certain kinds of toxicity over others.
+          Significantly, while the identity hate label applies to <span class="accent">1405</span> comments in the training set, this must cover all forms of identity hate.
+          In the <a href="https://www.kaggle.com/competitions/jigsaw-unintended-bias-in-toxicity-classification/overview">Jigsaw Unintended Bias In Toxicity Detection Challenge dataset</a>, these identities are noted as appearing more than 500 times in the test set, making them significant.
+        </div>
+        <div class="col-lg-6 bordered">
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th>Mentioned Identity</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>male</td></tr>
+                <tr><td>female</td></tr>
+                <tr><td>homosexual_gay_or_lesbian</td></tr>
+                <tr><td>christian</td></tr>
+                <tr><td>jewish</td></tr>
+                <tr><td>muslim</td></tr>
+                <tr><td>black</td></tr>
+                <tr><td>white</td></tr>
+                <tr><td>psychiatric_or_mental_illness</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+    <p class="section-body reveal-item">If we assume that the makeup of the JTCCC dataset is similar, we can calculate that specific identity hate mentioning women counts for less than <span class="accent">156</span> of <span class="accent">159,571</span> comments in the dataset.
+      Collapsing all identity hate into one category like this disguises the lack of equal representation in the dataset, allowing this particular form of bias to go unnoticed at first glance.
+    </p>
+      <p class="section-body reveal-item">While it would be impossible to capture every unique form of identity hate in an individual label, this issue could be reduced by introducing more subcategories within the existing taxonomy, eg. individual labels for misogyny, racism, transphobia, homophobia, etc.
+        By expanding the identity hate label in this way, it becomes easier to analyse and improve trends in the model's performance with respect to different kinds of discrimination.
+    </p>
+  </section>
+
+
+  <!--part 4, model and evaluation failure-->
+  <section id="section-5" class="story-section reveal-section">
+    <div class="container">
+
+      <p class="section-label reveal-item">Layer 4</p>
+      <div class="row g-5 align-items-start">
+
+        <div class="col-12 col-lg-4">
+          <h2 class="section-title reveal-item">Model & Evaluation Failure</h2>
+          <p class="section-body reveal-item">
+            For this section I investigated Unitary AI's <a href="https://github.com/unitaryai/detoxify">Detoxify</a> model, pretrained on the Jigsaw TCCC dataset.
+          </p>
+          <p class="section-body reveal-item">
+            I evaluated the model's performance on 4 different samples from the test dataset:
+          </p>
+
+          <div class="acc-item">
+  <div class="acc-header">X₁: identity_hate_misogyny</div>
+  <div class="acc-body">Comments annotated as containing identity hate, in which i found misogynistic, anti-woman rhetoric.</div>
+</div>
+       <div class="acc-item">
+  <div class="acc-header">X₂: non_identity_hate_misogyny</div>
+  <div class="acc-body">Comments not annotated as containing identity hate, in which I still found misogynistic, anti-woman rhetoric.</div>
+</div>
+       <div class="acc-item">
+  <div class="acc-header">X₃: non_identity_hate_toxic</div>
+  <div class="acc-body">A random sample of comments annotated as toxic, but not containing identity hate.</div>
+</div>
+       <div class="acc-item">
+  <div class="acc-header">X₄: identity_hate_not_misogyny</div>
+  <div class="acc-body">Comments marked as containing identity hate (eg. homophobia, racism etc), but not found to contain explicit misogynistic rhetoric.</div>
+</div>
+
+  
+        </div>
+
+        <div class="col-12 col-lg-8 reveal-item">
+          <div class="chart-wrapper">
+            <div class="chart-title-row">
+              <span class="chart-title">Detoxify predictions for mean level of toxicity and identity hate accross four samples</span>
+            </div>
+            <svg id="chart1" class="d3-chart"></svg>
+          </div>
+          <p class="section-body top-margin">The Detoxify original model returns a value between 0 and 1 for each label, representing the model's level of confidence that the category of toxicity is present in the comment. 
+            As every member of the sample datasets was annotated as containing toxic content, the average toxicity level prediction also represents average accuracy here.</p>
+           <p class="section-body top-margin">By evaluating the pretrained model's performance in ambiguous cases brought about by flaws in the structure of the data, I wanted to examine the way that data collection and taxonomy carries through to the model's predictions, proliferating potential bias. </p>
+        </div>
+
+        <h2 class="subtitle reveal-item">Misogyny as identity hate</h2>
+
+      
+      <p class="section-body">In the test dataset I found a significant number of comments including clear misogynistic, woman-hating rhetoric, yet they were not flagged as cases of identity hate (sample X₂). 
+        This seemingly reflected a trend throughout the entire dataset, including the training data, as the above graph shows that these cases were far less likely to be identified as identity hate by the model itself than comments that had been annotated as such. 
+        Sample X₂ also recieved the lowest overall toxicity prediction of all samples, suggesting that the type of misogynistic comment being overlooked as an example of identity hate is also treated as less toxic or harmful in general by annotators.</p>
+
+        <p class="section-body">Shown are some examples of the misogynistic content of comments in sample X₂, not flagged by annotators as identity hate, and their predicted levels of toxicity and identity hate.</p>
+
+
+                <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th> </th><th>comment</th><th>toxicity</th><th>identity_hate</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>01</td><td>'she is a huge slut'</td><td>0.99187136</td><td>0.031920463</td></tr>
+                  <tr><td>02</td><td>'she is a slutty whore'</td><td>0.99659306</td><td>0.26147</td></tr>
+                    <tr><td>03</td><td>'all children named Madi will grow up as a whore'</td><td>0.9569943</td><td>0.054611884</td></tr>
+                    <tr><td>04</td><td>'A lucky cunt is a girl who finally finds a true master. Also, the master has to find a girl to become his slave'</td><td>0.7600956</td><td>0.037185267</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="section-body">Each example contains clearly hateful or discriminatory language towards women based on their identity, yet neither human annotators nor the model recognise this. 
+            With such a small sample, it would be impossible to identify accurately the patterns in the type of misogynistic rhetoric that seems to be treated as less toxic or hateful. 
+            Strathern and Pfeffer (2022) suggest that the more explicit or vulgar the misogynistic hate speech is, the more likely it is to be recognised by toxicity models, while less explicit forms of misogyny, such as the dogwhistles discussed earlier, can be overlooked. 
+            This could be reflected in my findings here; Although the example X₂ comments above do contain misogynistic slurs such as 'cunt' and 'whore', the X₁ comments on average contained significantly more varied and emotive expletive language. 
+            As shown in the graph, X₁ produced more accurate toxicity and identity hate predictions, which could reinforce their conclusion.</p>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!--part 5, sensing and synthetic distortion-->
+  <section id="section-6" class="story-section section-dark reveal-section">
+    <div class="container">
+
+      <p class="section-label reveal-item">Layer 5</p>
+      <h2 class="section-title reveal-item">Sensing & Synthetic Distortion</h2>
+      <p class="section-body reveal-item">As I touched on previously, the model and the data that defines it do not exist in a vacuum - 
+        the structural misogyny that models such as these attempt to combat impacts every stage of the computational pipeline.</p>
+
+      <div class="row g-5">
+
+        <div class="col-12 col-lg-6 reveal-item">
+          <div>
+            <img
+              src="valorant2.jpg"
+              alt="Image of Valorant text chat ban alert."
+              class="img-fluid"
+            />
+            <p class="image-caption">Valorant text chat ban alert. Source: X</p>
+          </div>
+          <h2 class="subtitle reveal-item">Sensing</h2>
+          <p class="section-body reveal-item">Firstly, inequalities are introduced at the sensing level, as the data is collected in-game. An example of this can be seen in Riot Games’ first person hero shooter, Valorant, which uses a combination of ‘traditional’ text-based chat and voice communications in-game, allowing two different channels for potentially toxic speech. 
+            While text chat logs are automatically collected and stored for up to 3 months, unless a report is filed voice comms logs are automatically deleted after 24 hours, meaning that a significant portion of communication data is removed before it can be used for any kind of training. 
+            Additionally, voice comms are filtered through additional layers of synthetic distortion as an Automatic Speech Recognition model must be used in order to create clean text data for analysis and training.
+          </p>
+            <p class="section-body reveal-item">Not only does this introduce an entirely new dimension of inequality and bias to the pipeline (Feng et al. 2021), but this bias results in a higher rate of false negative toxicity reports, essentially allowing toxic players to ‘get away with’ harmful rhetoric in voice comms that would be penalised in text chat. 
+              This is reinforced by the fact that Riot did not release the beta for voice chat moderation until June 2022, two years after the release of Valorant itself. 
+              Even as voice chat moderation improves, a culture remains in which players feel more comfortable using toxic and harmful language in voice comms than text chat.
+            </p>
+            <p class="section-body reveal-item">The result of this is that if only text chat data is being collected and used for training, it is likely that a large portion of the most harmful communication in-game is being missed entirely, spoken in voice comms instead. This represents a structural flaw with the sensing process in which developers must choose between introducing bias to training data through including data synthetically distorted by ASR, or using an incomplete, skewed dataset. </p>
+        </div>
+
+        <div class="col-12 col-lg-6">
+          <h2 class="subtitle reveal-item">Infrastructure</h2>
+          <p class="section-body reveal-item">
+          While independent developers can aim to improve toxicity detection models, online gaming culture is dominated and shaped by a handful of companies. 
+          Ranking online multiplayer-focused PC games by monthly active users, at the time of writing six out of the ten highest ranking games were published by Blizzard Entertainment, Valve or Riot Games. 
+          Of the seven publishers represented in the list, Chinese conglomerate Tencent owns stakes in <span class="accent">five</span>.
+          </p>
+
+          <p class="section-body reveal-item">
+           As such, it becomes clear that the sensing, distortion, organisation and availability of the majority of online game-related data, and the use of this data to implement in-game solutions, is controlled by a tiny class of developers, publishers and investors. 
+           I suggested that inequality could be reduced through using data collected from in-game chat itself, including more in depth user and contextual information. There is a reason that this is not the case already, and it is likely simply due to not being in the best interests of this class. 
+           More extensive and longer-term data storage requires time and money spent ensuring compliance with data protection laws and higher storage costs, and the more time dedicated to developing and implementing robust chat moderation tools, the less can be spent on monetisation and player retention-focused features. 
+          </p>
+
+                 <p class="section-body reveal-item">
+            Additionally, we cannot overlook the reputation that online games have garnered as an incubator and facilitator of misogynistic, ‘anti-woke’ communities, allowing men to express “hypermasculine aggression” (Mortensen 2016) to an (often harmful) extreme. 
+            Looking back on the GamerGate backlash, for example, it becomes easy to see why companies could see increasing restrictions on this behaviour as a potentially very costly risk.
+          </p>
+     
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!--part 6, interface intervention and change-->
+  <section id="section-7" class="story-section section-conclusion reveal-section">
+    <div class="container">
+
+      <p class="section-label reveal-item">Layer 6</p>
+      <h2 class="section-title reveal-item">Interface, intervention & change</h2>
+      <p class="section-body reveal-item">As discussed in the previous section, systemic change to the pipeline of toxicity detection in online games is simply not possible for one person to carry out alone. 
+        This is primarily due to the fact that not only does inequality appear at every level of data collection and model creation, but that this inequality is a foundational element of the gender-based society in which we live. 
+        My main goal has been to observe this, removing the facade of objectivity that the computational black box lends to the machine learning pipeline and highlighting the points at which wider-scale intervention could be possible.</p>
+      <div class="row g-5 align-items-center">
+
+        <div class="col-12 col-lg-5">
+          <p class="section-body reveal-item">
+            I believe this to be particularly significant in the case of gender-based oppression, as the cultural dominance of patriarchy heavily relies on the “natural sheen” given by the emphasis on a supposedly ‘inherent’ sexual difference and inequality (Butler 2006). 
+            In order to dismantle the societal inequality at hand, this assumption of objectivity must be questioned in all aspects of gender inequality, including computation. 
+            I have done this by showing how subjectivity, human choice and societal beliefs affect the machine learning pipeline at every stage, ultimately resulting in an inequality with real detrimental effects for female gamers, and women in general.
+          </p>
+         
+        </div>
+
+        <div class="col-12 col-lg-7 bordered padded reveal-item">
+   <p class="section-body reveal-item">
+            Through using these different tools together, 
+            I was able to coherently demonstrate how each layer of the system pipeline proliferates bias differently, 
+            requiring different intervention. 
+          </p>
+                  <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr><th>tool</th><th>critical purpose</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>HTML, JS, CSS</td><td>Creates an accessible interface through which users can interact with the usually-inaccessible stages of the machine learning pipeline.</td></tr>
+                  <tr><td>Diagram software</td><td>Demonstrates the flow of data and inequality through the system, how inequality adds and changes through each step of the data processing pipeline.</td></tr>
+                    <tr><td>D3.js</td><td>Allows for clear representation of the data with interactive elements that help with user comprehension. 
+                      For example, bar charts with tooltips displaying figures for each bar allows for users to rapidly switch between a zoomed-out, broad comparative view of the data, to seeing exact figures written clearly. 
+                      This, alongside tabs allowing for switching between charts, presents an accessible view of the data that shapes the machine learning process.</td></tr>
+                    <tr><td>Python notebooks with Pandas</td><td>Allow the user to interact directly with the datasets being used for training and testing, demystifying the data collection process. 
+                      Allowed me to clean and work with the data easily in order to extract the relevant insights that would usually be obscured.
+                    </td></tr>
+                    <tr><td>Detoxify package</td><td>Reveals the direct impact that bias in data collection and classification has on the behaviour of the model, as well as allowing me to examine and demonstrate particular cases in which the model fails.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <blockquote class="callout-box reveal-item">
+          The first step in combating patriarchy is to recognise which truths that we recognise as objective are actually influenced by a man-made culture of misogyny. The area of machine learning is no exception to this. By recognising this inequality, particularly in the influential cultural sphere of online gaming, we can begin to create a true theory of change.
+        </blockquote>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="references" class="story-section">
+    <div class="container">
+    <h2 class="section-title reveal-item">References</h2>
+    <p class="section-body">Amaechi-Okorie, O. H., Radeljic, B. (2026), ‘Unheard in the Digital Age: Rethinking AI Bias and Speech Diversity’, arXiv:2601.18641. https://doi.org/10.48550/arXiv.2601.18641</p>
+    <p class="section-body">Bezio, K (2018). ‘Ctrl-Alt-Del: GamerGate as a precursor to the rise of the alt-right’, Leadership, 14(5) https://doi.org/10.1177/1742715018793744</p>
+    <p class="section-body">Butler, J. (2006) Gender Trouble. New York: Routledge</p>
+    <p class="section-body">Google, (2019), civil_comments [Data Set]. Available at https://huggingface.co/datasets/google/civil_comments (Accessed: 10th March 2026)</p>
+    <p class="section-body">Hanu, L., Unitary Team (2020), Detoxify version 0.5.1. Available at https://github.com/unitaryai/detoxify. (Accessed: 20th March 2026)</p>
+    <p class="section-body">Jane, E.A. (2014), ‘‘Back to the kitchen, cunt’: speaking the unspeakable about online misogyny’. Continuum Journal of Media & Cultural Studies, 4, pp558-570 https://doi.org/10.1080/10304312.2014.924479</p>
+    <p class="section-body">Jigsaw (2017), Toxic Comment Classification Challenge [Data Set]. Available at https://www.kaggle.com/competitions/jigsaw-toxic-comment-classification-challenge/overview (Accessed: 10th March, 2026)</p>
+    <p class="section-body">Jigsaw (2019), Jigsaw Unintended Bias in Toxicity Classification [Data Set]. Available at https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification. (Accessed: 12th March 2026)</p>
+    <p class="section-body">Mercante, A. (2023), ‘Despite Advancements, Games Still Aren’t Doing Enough to Stop toxic Voice Chat’, Kotaku. Available at https://kotaku.com/toxic-voice-chat-women-overwatch-valorant-xbox-report-1850663717 (Accessed: 20th March 2026)</p>
+    <p class="section-body">Messner, S., Wolens, J. (2024), Every game company that Tencent has invested in. Available at https://www.pcgamer.com/every-game-company-that-tencent-has-invested-in/ (Accessed: 20th March 2026)</p>
+    <p class="section-body">Mortensen, T. E. (2016) ‘Anger, Fear, and Games: The Long Event of #GamerGate’, Games and Culture 13(8). https://doi.org/10.1177/1555412016640408</p>
+    <p class="section-body">Newzoo, Most popular PC games by monthly active users (MAU) - 37 markets. Available at https://newzoo.com/resources/rankings/top-20-pc-games. (Accessed: 20th March 2026)</p>
+    <p class="section-body">Oxford University Press. (n.d.). Cocksucker, n. In Oxford English dictionary. https://doi.org/10.1093/OED/2871949544</p>
+    <p class="section-body">Riot Games. (2022), Valorant Voice Evaluation Update. Available at https://playvalorant.com/en-gb/news/announcements/valorant-voice-evaluation-update/ (Accessed: 20th March 2026)</p>
+    <p class="section-body">Stoll, J. (2025) ‘Video gaming audiences in the United Kingdom (UK) - Statistics & Facts’. Available at https://www.statista.com/topics/8281/video-gamer-demographics-in-the-united-kingdom-uk/#topicOverview (Accessed: 6th March 2026)</p>
+    <p class="section-body">Strathern, W., Pfeffer, J. (2022), 'Identifying Different Layers of Online Misogyny'. arXiv:2212.00480.https://doi.org/10.48550/arXiv.2212.00480 </p>
+    <p class="section-body">Susanti, A. (2022). ‘GG’s and NT’s: Gaming language in the chat feature of FPS game Valorant’. Diski, 30(2), pp109-116 https://doi.org/10.21831/diksi.v30i2.52660</p>
+    <p class="section-body">Wittig, M. (1992) The Straight Mind and Other Essays. Massachusetts: Beacon Press</p>
+    <p class="section-body">Zhou Y., Peterson ZD. (2025) ‘Women's Experiences of Sexual Harassment in Online Gaming’. Violence Against Women. 31(8) pp2037-2052. doi:10.1177/10778012241252021. </p>
+
+</div>
+  </section>
+
+ 
+
+
+  
+  <!--script stuff!!-->
+   <!--bootstrap-->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!--my javascript-->
+  <script src="app.js"></script>
+</body>
+</html>
