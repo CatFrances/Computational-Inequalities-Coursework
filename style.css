@@ -194,14 +194,14 @@ body {
 }
 
 /*for name, etc under title*/
-.hero-meta {
+.hero-info {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-/*try chips like data collection section?*/
-.meta-chip {
+/*try boxes like data collection section?*/
+.info-box {
   font-family: var(--font-mono);
   font-size: 1rem;
   letter-spacing: 0.12em;
@@ -236,7 +236,7 @@ body {
 }
 
 
-/* stat chip row */
+/* stat boxes row */
 
 .stat-row {
   display: flex;
@@ -245,7 +245,7 @@ body {
   margin: 2rem 0 2.5rem;
 }
 
-.stat-chip {
+.stat-box {
   display: flex;
   flex-direction: column;
   background: var(--bg);
