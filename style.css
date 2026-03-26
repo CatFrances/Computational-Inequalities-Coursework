@@ -440,20 +440,6 @@ body {
 }
 
 
-/* conclusion */
-.section-conclusion {
-  background: var(--bg);
-}
-
-.section-conclusion::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 70% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-
 .reveal-item {
   opacity: 0;
   transform: translateY(28px);
