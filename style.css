@@ -102,11 +102,6 @@ body {
   width: 100%;
 }
 
-/*diff colours for background ?*/
-.section-dark {
-  background-color: var(--bg);
-}
-
 
 /* small layer label */
 .section-label {
