@@ -22,7 +22,7 @@
 
   --section-min-h: 100vh;
   --container-max: 1200px;
-  --transition:    0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  --transition:    0.6s cubic-bezier(0.22, 1, 0.36, 1); /*cubic bezier gives best effect*/
 }
 
 
