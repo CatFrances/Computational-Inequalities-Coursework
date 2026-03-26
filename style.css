@@ -496,7 +496,7 @@ body {
 }
 
 
-/* ── Responsive tweaks ──────────────────────────────────────── */
+/* responsive stuff TEST */
 @media (max-width: 992px) {
   .story-section { padding: 5rem 0 4rem; }
   .hero-title { font-size: clamp(2.5rem, 10vw, 5rem); }
